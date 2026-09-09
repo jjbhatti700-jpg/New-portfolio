@@ -1,0 +1,168 @@
+.pyramid-scene {
+  position: relative;
+  width: min(48vw, 600px);
+  min-width: 360px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.pyramid-aura {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(127, 73, 255, .24), rgba(40, 208, 255, .09) 38%, transparent 70%);
+  filter: blur(28px);
+  animation: pyramid-breathe 5s ease-in-out infinite;
+}
+
+.pyramid-grid {
+  position: absolute;
+  inset: 8%;
+  opacity: .25;
+  background-image:
+    linear-gradient(rgba(103, 221, 255, .14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 221, 255, .14) 1px, transparent 1px);
+  background-size: 34px 34px;
+  transform: perspective(650px) rotateX(64deg) rotateZ(-18deg);
+  mask-image: radial-gradient(circle, black 15%, transparent 70%);
+}
+
+.pyramid-loader {
+  position: relative;
+  width: clamp(220px, 28vw, 340px);
+  height: clamp(220px, 28vw, 340px);
+  display: block;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateZ(-1deg);
+  z-index: 2;
+  animation: pyramid-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.pyramid-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: pyramid-spin 8s linear infinite;
+  will-change: transform;
+}
+
+.pyramid-side {
+  width: 38%;
+  height: 38%;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transform-origin: center top;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  backface-visibility: hidden;
+  filter: drop-shadow(0 0 18px rgba(117, 86, 255, .2));
+}
+
+.pyramid-side1 {
+  transform: rotateZ(-30deg) rotateY(90deg);
+  background: linear-gradient(145deg, #55e9ff 0%, #6951ff 48%, #d24fff 100%);
+}
+
+.pyramid-side2 {
+  transform: rotateZ(30deg) rotateY(90deg);
+  background: linear-gradient(145deg, #7d5cff 0%, #d64cff 52%, #42e7ff 100%);
+}
+
+.pyramid-side3 {
+  transform: rotateX(30deg);
+  background: linear-gradient(145deg, #3f4cff 0%, #b04cff 58%, #dffcff 100%);
+}
+
+.pyramid-side4 {
+  transform: rotateX(-30deg);
+  background: linear-gradient(145deg, #4ce8d1 0%, #8c4cff 50%, #f24bff 100%);
+}
+
+.pyramid-shadow {
+  width: 34%;
+  height: 34%;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: #8058e8;
+  transform: rotateX(90deg) translateZ(-48px);
+  filter: blur(22px);
+  opacity: .55;
+}
+
+.pyramid-orbit {
+  position: absolute;
+  border: 1px solid rgba(147, 117, 255, .2);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pyramid-orbit-a {
+  width: 82%;
+  height: 27%;
+  transform: rotateX(66deg) rotateZ(-17deg);
+  animation: orbit-drift 11s linear infinite;
+}
+
+.pyramid-orbit-b {
+  width: 66%;
+  height: 21%;
+  transform: rotateY(66deg) rotateZ(24deg);
+  border-color: rgba(67, 218, 255, .17);
+  animation: orbit-drift 8s linear infinite reverse;
+}
+
+.pyramid-label {
+  position: absolute;
+  z-index: 5;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(4, 4, 8, .56);
+  color: rgba(255,255,255,.5);
+  font: 600 .58rem var(--font-mono);
+  letter-spacing: .16em;
+  backdrop-filter: blur(10px);
+}
+
+.pyramid-label-a { top: 18%; right: 3%; }
+.pyramid-label-b { left: 4%; bottom: 17%; }
+
+@keyframes pyramid-spin {
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes pyramid-float {
+  50% { transform: rotateX(-20deg) rotateZ(-1deg) translateY(-10px); }
+}
+
+@keyframes pyramid-breathe {
+  50% { transform: scale(1.08); opacity: .8; }
+}
+
+@keyframes orbit-drift {
+  to { transform: rotateX(66deg) rotateZ(343deg); }
+}
+
+@media (max-width: 800px) {
+  .pyramid-scene { width: min(90vw, 520px); min-width: 0; }
+  .pyramid-loader { width: min(58vw, 290px); height: min(58vw, 290px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pyramid-wrapper,
+  .pyramid-loader,
+  .pyramid-aura,
+  .pyramid-orbit { animation: none; }
+}
+
+@media (max-width: 600px) {
+  .pyramid-aura { filter: blur(20px); opacity: .82; }
+  .pyramid-side { filter: drop-shadow(0 0 12px rgba(117, 86, 255, .16)); }
+  .pyramid-label { backdrop-filter: none; background: rgba(4,4,8,.78); }
+}
